@@ -26,32 +26,38 @@ export default function Game() {
   }
 
   const companies = {
-    woolworth: {name: 'Woolworth', color: 'orange-500', price: woolworthPrice, dividend: 4},
-    alcoa: { name: 'Alcoa', color: 'red-500', alcoaPrice, dividend: 4},
+    woolworth: {name: 'Woolworth', color: 'bg-orange-500', price: woolworthPrice, dividend: 4},
+    alcoa: { name: 'Alcoa', color: 'bg-red-500', alcoaPrice, dividend: 4},
     americanMotors: { name: 'American Motors', color: 'bg-blue-500', price: americanMotorsPrice, dividend: 3},
     westernPublishing: { name: 'Western Publishing', color: 'bg-green-300', price: westernPublishingPrice, dividend: 3},
-    maytag: { name: 'Maytag', color: 'green-500', price: maytagPrice, dividend: 2},
-    jICase: { name: 'J. I. Case', color: 'yellow-500', jICasePrice, dividend: 2},
-    generalMills: { name: 'General Mills', color: 'blue-300', price: generalMillsPrice, dividend: 1},
-    internationalShoe: { name: 'International Shoe', color: 'purple-500', price: internationalShoePrice, dividend: 1}
+    maytag: { name: 'Maytag', color: 'bg-green-500', price: maytagPrice, dividend: 2},
+    jICase: { name: 'J. I. Case', color: 'bg-yellow-500', jICasePrice, dividend: 2},
+    generalMills: { name: 'General Mills', color: 'bg-blue-300', price: generalMillsPrice, dividend: 1},
+    internationalShoe: { name: 'International Shoe', color: 'bg-purple-500', price: internationalShoePrice, dividend: 1}
   }
 
   const squares: any[] = [
-    { type: 'start' },
-    { type: 'brokerFee', direction: 'counter'},
-    { type: 'sellAll', company: companies.jICase},
-    { type: 'stock', company: companies.internationalShoe, direction: 'counter'},
+    { type: 'brokerFee', position: 0, direction: 'counter'},
+    { type: 'sellAll', position: 1, company: companies.jICase, direction: 'counter'},
+    { type: 'stock', position: 2, company: companies.internationalShoe, direction: 'counter'},
+    { type: 'stock', position: 3, company: companies.internationalShoe, direction: 'counter'},
+    { type: 'stock', position: 4, company: companies.internationalShoe, direction: 'counter'},
+    { type: 'stock', position: 5, company: companies.internationalShoe, direction: 'counter'},
+    { type: 'start', position: 6},
   ]
 
 
+
+  
 
   return (
     <div>
       <>
       {squares.map((square) => (
-        <Square key={square.company} square={square} />
+        <Square key={square.position} square={square} />
       ))}
       </>
+      sup
     </div>
   )
 }
