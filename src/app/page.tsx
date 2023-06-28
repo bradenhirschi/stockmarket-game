@@ -26,19 +26,21 @@ export default function Game() {
   }
 
   const companies = {
-    woolworth: {name: 'Woolworth', colorClass: 'bg-orange-500', price: woolworthPrice, dividend: 4},
-    alcoa: { name: 'Alcoa', colorClass: 'bg-red-500', alcoaPrice, dividend: 4},
-    americanMotors: { name: 'American Motors', colorClass: 'bg-blue-500', price: americanMotorsPrice, dividend: 3},
-    westernPublishing: { name: 'Western Publishing', colorClass: 'bg-green-300', price: westernPublishingPrice, dividend: 3},
-    maytag: { name: 'Maytag', colorClass: 'bg-green-500', price: maytagPrice, dividend: 2},
-    jICase: { name: 'J. I. Case', colorClass: 'bg-yellow-500', jICasePrice, dividend: 2},
-    generalMills: { name: 'General Mills', colorClass: 'bg-blue-300', price: generalMillsPrice, dividend: 1},
-    internationalShoe: { name: 'International Shoe', colorClass: 'bg-purple-500', price: internationalShoePrice, dividend: 1}
+    woolworth: {name: 'Woolworth', color: 'orange-500', price: woolworthPrice, dividend: 4},
+    alcoa: { name: 'Alcoa', color: 'red-500', alcoaPrice, dividend: 4},
+    americanMotors: { name: 'American Motors', color: 'bg-blue-500', price: americanMotorsPrice, dividend: 3},
+    westernPublishing: { name: 'Western Publishing', color: 'bg-green-300', price: westernPublishingPrice, dividend: 3},
+    maytag: { name: 'Maytag', color: 'green-500', price: maytagPrice, dividend: 2},
+    jICase: { name: 'J. I. Case', color: 'yellow-500', jICasePrice, dividend: 2},
+    generalMills: { name: 'General Mills', color: 'blue-300', price: generalMillsPrice, dividend: 1},
+    internationalShoe: { name: 'International Shoe', color: 'purple-500', price: internationalShoePrice, dividend: 1}
   }
 
-  const squares: Array<{company: any, direction: string} | 'Broker Fee' > = [
-    'Broker Fee',
-    { company: companies.internationalShoe, direction: 'counter'},
+  const squares: any[] = [
+    { type: 'start' },
+    { type: 'brokerFee', direction: 'counter'},
+    { type: 'sellAll', company: companies.jICase},
+    { type: 'stock', company: companies.internationalShoe, direction: 'counter'},
   ]
 
 
@@ -47,7 +49,7 @@ export default function Game() {
     <div>
       <>
       {squares.map((square) => (
-        <Square key={square.company} company={square.company} colorClass={square.colorClass} price={square.price!} />
+        <Square key={square.company} square={square} />
       ))}
       </>
     </div>
