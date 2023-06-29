@@ -1,4 +1,4 @@
-import '../styles/globals.scss';
+import './globals.scss';
 
 const RootLayout = async ({
   children,
