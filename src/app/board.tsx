@@ -25,6 +25,58 @@ const Board = () => {
     "General Mills": 0.5,
   };
 
+  const [roll, setRoll] = useState(0);
+
+  const [player, setPlayer] = useState({
+    position: 46, // Set the initial position of the player
+    // Add any other properties related to the player if needed
+  });
+
+  function rollTheDice() {
+    let localDiceRoll;
+    let localPlayerPosition = player.position;
+
+    // Generate dice roll
+    const dieOne = Math.floor(Math.random() * 6 + 1);
+    const dieTwo = Math.floor(Math.random() * 6 + 1);
+    localDiceRoll = dieOne + dieTwo;
+
+    // Set roll purely to display to the player
+    setRoll(localDiceRoll);
+
+    // Find which square the player is occupying
+    let currentlyOccupiedSquare = squares.find(
+      (square) => square.gamePosition === player.position
+    );
+
+    // Move function's local player variable
+    if (currentlyOccupiedSquare.type === "start") {
+      // do some stuff
+    } else if (currentlyOccupiedSquare.direction === "clock") {
+      localPlayerPosition += localDiceRoll;
+    } else if (currentlyOccupiedSquare.direction === "counter") {
+      localPlayerPosition -= localDiceRoll;
+    }
+
+    if (localPlayerPosition < 0) {
+      localPlayerPosition += 48;
+    } else if (localPlayerPosition > 47) {
+      localPlayerPosition -= 48;
+    }
+
+    // Update player position to show to user
+    setPlayer({ position: localPlayerPosition });
+
+    {
+      /*setDiceRolled(roll)
+		dicesPlayed.push(roll)
+		moveTokenOnBoard()
+		setLandedCardPreview(true)
+		collectTaxes()
+    inJail()*/
+    }
+  }
+
   const companies = {
     woolworth: {
       name: "Woolworth",
@@ -104,61 +156,290 @@ const Board = () => {
       gamePosition: 4,
       physicalPosition: 4,
       company: companies.westernPublishing,
-      direction: "counter",
+      direction: "clock",
     },
     {
       type: "stock",
       gamePosition: 5,
       physicalPosition: 5,
       company: companies.woolworth,
+      direction: "clock",
+    },
+    { type: "start", gamePosition: 6, physicalPosition: 6 },
+    {
+      type: "stock",
+      gamePosition: 7,
+      physicalPosition: 7,
+      company: companies.alcoa,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 8,
+      physicalPosition: 8,
+      company: companies.americanMotors,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 9,
+      physicalPosition: 9,
+      company: companies.jICase,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 10,
+      physicalPosition: 10,
+      company: companies.generalMills,
+      direction: "clock",
+    },
+    {
+      type: "sellAll",
+      gamePosition: 11,
+      physicalPosition: 11,
+      company: companies.maytag,
+      direction: "clock",
+    },
+    {
+      type: "brokerFee",
+      gamePosition: 12,
+      physicalPosition: 12,
       direction: "counter",
     },
-    { type: "start", gamePosition: 6, physicalPosition: 6},
-    { type: "stock", gamePosition: 7, physicalPosition: 7, company: companies.alcoa },
-    { type: "stock", gamePosition: 8, physicalPosition: 8, company: companies.americanMotors },
-    { type: "stock", gamePosition: 9, physicalPosition: 9, company: companies.jICase },
-    { type: "stock", gamePosition: 10, physicalPosition: 10, company: companies.generalMills },
-    { type: "sellAll", gamePosition: 11, physicalPosition: 11, company: companies.maytag },
-    { type: "brokerFee", gamePosition: 12, physicalPosition: 12 },
-    { type: "sellAll", gamePosition: 47, physicalPosition: 13, company: companies.westernPublishing },
-    { type: "sellAll", gamePosition: 13, physicalPosition: 14, company: companies.woolworth },
-    { type: "stock", gamePosition: 46, physicalPosition: 15, company: companies.alcoa },
-    { type: "stock", gamePosition: 14, physicalPosition: 16, company: companies.americanMotors },
-    { type: "stock", gamePosition: 45, physicalPosition: 17, company: companies.americanMotors },
-    { type: "stock", gamePosition: 15, physicalPosition: 18, company: companies.alcoa },
-    { type: "stock", gamePosition: 44, physicalPosition: 19, company: companies.maytag },
-    { type: "stock", gamePosition: 16, physicalPosition: 20, company: companies.generalMills },
-    { type: "stock", gamePosition: 43, physicalPosition: 21, company: companies.generalMills },
-    { type: "stock", gamePosition: 17, physicalPosition: 22, company: companies.maytag },
+
+    {
+      type: "sellAll",
+      gamePosition: 47,
+      physicalPosition: 13,
+      company: companies.westernPublishing,
+      direction: "clock",
+    },
+    {
+      type: "sellAll",
+      gamePosition: 13,
+      physicalPosition: 14,
+      company: companies.woolworth,
+      direction: "counter",
+    },
+    {
+      type: "stock",
+      gamePosition: 46,
+      physicalPosition: 15,
+      company: companies.alcoa,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 14,
+      physicalPosition: 16,
+      company: companies.americanMotors,
+      direction: "counter",
+    },
+    {
+      type: "stock",
+      gamePosition: 45,
+      physicalPosition: 17,
+      company: companies.americanMotors,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 15,
+      physicalPosition: 18,
+      company: companies.alcoa,
+      direction: "counter",
+    },
+    {
+      type: "stock",
+      gamePosition: 44,
+      physicalPosition: 19,
+      company: companies.maytag,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 16,
+      physicalPosition: 20,
+      company: companies.generalMills,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 43,
+      physicalPosition: 21,
+      company: companies.generalMills,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 17,
+      physicalPosition: 22,
+      company: companies.maytag,
+      direction: "clock",
+    },
     { type: "start", gamePosition: 42, physicalPosition: 23 },
     { type: "start", gamePosition: 18, physicalPosition: 24 },
-    { type: "stock", gamePosition: 41, physicalPosition: 25, company: companies.internationalShoe },
-    { type: "stock", gamePosition: 19, physicalPosition: 26, company: companies.jICase },
-    { type: "stock", gamePosition: 40, physicalPosition: 27, company: companies.jICase },
-    { type: "stock", gamePosition: 20, physicalPosition: 28, company: companies.internationalShoe },
-    { type: "stock", gamePosition: 39, physicalPosition: 29, company: companies.westernPublishing },
-    { type: "stock", gamePosition: 21, physicalPosition: 30, company: companies.woolworth },
-    { type: "stock", gamePosition: 38, physicalPosition: 31, company: companies.woolworth },
-    { type: "stock", gamePosition: 22, physicalPosition: 32, company: companies.westernPublishing },
-    { type: "sellAll", gamePosition: 38, physicalPosition: 33, company: companies.americanMotors },
-    { type: "sellAll", gamePosition: 23, physicalPosition: 34, company: companies.alcoa },
-    { type: "brokerFee", gamePosition: 36, physicalPosition: 35 },
-    { type: "sellAll", gamePosition: 35, physicalPosition: 36, company: companies.internationalShoe },
-    { type: "stock", gamePosition: 34, physicalPosition: 37, company: companies.maytag },
-    { type: "stock", gamePosition: 33, physicalPosition: 38, company: companies.generalMills },
-    { type: "stock", gamePosition: 32, physicalPosition: 39, company: companies.alcoa },
-    { type: "stock", gamePosition: 31, physicalPosition: 40, company: companies.americanMotors },
+    {
+      type: "stock",
+      gamePosition: 41,
+      physicalPosition: 25,
+      company: companies.internationalShoe,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 19,
+      physicalPosition: 26,
+      company: companies.jICase,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 40,
+      physicalPosition: 27,
+      company: companies.jICase,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 20,
+      physicalPosition: 28,
+      company: companies.internationalShoe,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 39,
+      physicalPosition: 29,
+      company: companies.westernPublishing,
+      direction: "counter",
+    },
+    {
+      type: "stock",
+      gamePosition: 21,
+      physicalPosition: 30,
+      company: companies.woolworth,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 38,
+      physicalPosition: 31,
+      company: companies.woolworth,
+      direction: "counter",
+    },
+    {
+      type: "stock",
+      gamePosition: 22,
+      physicalPosition: 32,
+      company: companies.westernPublishing,
+      direction: "clock",
+    },
+    {
+      type: "sellAll",
+      gamePosition: 37,
+      physicalPosition: 33,
+      company: companies.americanMotors,
+      direction: "counter",
+    },
+    {
+      type: "sellAll",
+      gamePosition: 23,
+      physicalPosition: 34,
+      company: companies.alcoa,
+      direction: "clock",
+    },
+    {
+      type: "brokerFee",
+      gamePosition: 36,
+      physicalPosition: 35,
+      direction: "counter",
+    },
+
+    {
+      type: "sellAll",
+      gamePosition: 35,
+      physicalPosition: 36,
+      company: companies.internationalShoe,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 34,
+      physicalPosition: 37,
+      company: companies.maytag,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 33,
+      physicalPosition: 38,
+      company: companies.generalMills,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 32,
+      physicalPosition: 39,
+      company: companies.alcoa,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 31,
+      physicalPosition: 40,
+      company: companies.americanMotors,
+      direction: "clock",
+    },
     { type: "start", gamePosition: 30, physicalPosition: 41 },
-    { type: "stock", gamePosition: 29, physicalPosition: 42, company: companies.westernPublishing },
-    { type: "stock", gamePosition: 28, physicalPosition: 43, company: companies.woolworth },
-    { type: "stock", gamePosition: 27, physicalPosition: 44, company: companies.internationalShoe },
-    { type: "stock", gamePosition: 26, physicalPosition: 45, company: companies.jICase },
-    { type: "sellAll", gamePosition: 25, physicalPosition: 46, company: companies.generalMills },
-    { type: "brokerFee", gamePosition: 24, physicalPosition: 47 },
+    {
+      type: "stock",
+      gamePosition: 29,
+      physicalPosition: 42,
+      company: companies.westernPublishing,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 28,
+      physicalPosition: 43,
+      company: companies.woolworth,
+      direction: "clock",
+    },
+    {
+      type: "stock",
+      gamePosition: 27,
+      physicalPosition: 44,
+      company: companies.internationalShoe,
+      direction: "counter",
+    },
+    {
+      type: "stock",
+      gamePosition: 26,
+      physicalPosition: 45,
+      company: companies.jICase,
+      direction: "counter",
+    },
+    {
+      type: "sellAll",
+      gamePosition: 25,
+      physicalPosition: 46,
+      company: companies.generalMills,
+      direction: "counter",
+    },
+    {
+      type: "brokerFee",
+      gamePosition: 24,
+      physicalPosition: 47,
+      direction: "counter",
+    },
   ];
 
   return (
     <>
+      <button onClick={rollTheDice}>Roll the dice</button>
+      <div>Your roll: {roll}</div>
       <div className="grid grid-cols-13 h-[1300px] w-[1300px]">
         {squares.map((square) => (
           <div
@@ -171,17 +452,17 @@ const Board = () => {
           >
             {square.gamePosition <= 47 && square.gamePosition >= 37 ? (
               <div className="grid grid-cols-12">
-                <Square square={square} />
+                <Square square={square} player={player} />
                 <div className="col-span-11"></div>
               </div>
             ) : (
-              <Square square={square} />
+              <Square square={square} player={player} />
             )}
           </div>
         ))}
       </div>
     </>
   );
-}
+};
 
 export default Board;
