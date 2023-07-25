@@ -28,8 +28,7 @@ const Board = () => {
   const [roll, setRoll] = useState(0);
 
   const [player, setPlayer] = useState({
-    position: 46, // Set the initial position of the player
-    // Add any other properties related to the player if needed
+    position: 6,
   });
 
   function rollTheDice() {
@@ -51,13 +50,20 @@ const Board = () => {
 
     // Move function's local player variable
     if (currentlyOccupiedSquare.type === "start") {
-      // do some stuff
+      if (localDiceRoll % 2 === 0) {
+        // If roll is even, move the player counterclockwise
+        localPlayerPosition -= localDiceRoll;
+      } else {
+        // If roll is odd, move the player clockwise
+        localPlayerPosition += localDiceRoll;
+      }
     } else if (currentlyOccupiedSquare.direction === "clock") {
       localPlayerPosition += localDiceRoll;
     } else if (currentlyOccupiedSquare.direction === "counter") {
       localPlayerPosition -= localDiceRoll;
     }
 
+    // Correct if player position moves past the 0 square
     if (localPlayerPosition < 0) {
       localPlayerPosition += 48;
     } else if (localPlayerPosition > 47) {
@@ -440,26 +446,102 @@ const Board = () => {
     <>
       <button onClick={rollTheDice}>Roll the dice</button>
       <div>Your roll: {roll}</div>
-      <div className="grid grid-cols-13 h-[1300px] w-[1300px]">
-        {squares.map((square) => (
-          <div
-            key={square.gamePosition}
-            className={
-              square.gamePosition <= 47 && square.gamePosition >= 37
-                ? "col-span-12"
-                : ""
-            }
-          >
-            {square.gamePosition <= 47 && square.gamePosition >= 37 ? (
-              <div className="grid grid-cols-12">
+
+      <div className="relative">
+        <div className="grid grid-cols-13 h-[1300px] w-[1300px]">
+          {squares.map((square) => (
+            <div
+              key={square.gamePosition}
+              className={
+                square.gamePosition <= 47 && square.gamePosition >= 37
+                  ? "col-span-12"
+                  : ""
+              }
+            >
+              {square.gamePosition <= 47 && square.gamePosition >= 37 ? (
+                <div className="grid grid-cols-12">
+                  <Square square={square} player={player} />
+                  <div className="col-span-11"></div>
+                </div>
+              ) : (
                 <Square square={square} player={player} />
-                <div className="col-span-11"></div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="absolute top-[100px] left-[300px] grid grid-cols-7">
+          <div className="h-[100px] w-[100px]">
+            <div className="grid grid-rows-2 h-full">
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                1 for 1
               </div>
-            ) : (
-              <Square square={square} player={player} />
-            )}
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                2 for 1
+              </div>
+            </div>
           </div>
-        ))}
+          <div className="h-[100px] w-[100px]">
+            <div className="grid grid-rows-2 h-full">
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                1
+              </div>
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                3 for 1
+              </div>
+            </div>
+          </div>
+          <div className="h-[100px] w-[100px]">
+            <div className="grid grid-rows-2 h-full">
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                1
+              </div>
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                2 for 1
+              </div>
+            </div>
+          </div>
+          <div className="h-[100px] w-[100px]">
+            <div className="grid grid-rows-2 h-full">
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                1
+              </div>
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                3 for 1
+              </div>
+            </div>
+          </div>
+          <div className="h-[100px] w-[100px]">
+            <div className="grid grid-rows-2 h-full">
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                1
+              </div>
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                2 for 1
+              </div>
+            </div>
+          </div>
+          <div className="h-[100px] w-[100px]">
+            <div className="grid grid-rows-2 h-full">
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                1
+              </div>
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                3 for 1
+              </div>
+            </div>
+          </div>
+          <div className="h-[100px] w-[100px]">
+            <div className="grid grid-rows-2 h-full">
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                1 for 1
+              </div>
+              <div className="flex items-center justify-center uppercase tracking-tighter text-xs font-bold border">
+                2 for 1
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -6,7 +6,7 @@ const Square = ({ square, player }: { square: any; player: any }) => {
   return (
     <>
       <div
-        className={`flex flex-col items-center justify-center uppercase tracking-tighter text-xs font-bold text-center h-[100px] w-[100px] border border-black p-2 ${
+        className={`flex flex-col items-center justify-center uppercase tracking-tighter text-xs font-bold text-center h-[100px] w-[100px] border p-2 ${
           square.company ? square.company.color : ""
         } `}
       >
